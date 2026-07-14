@@ -115,6 +115,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         requestNotificationPermissionIfNeeded()
+        setupCredit()
+    }
+
+    private fun setupCredit() {
+        val version = runCatching {
+            packageManager.getPackageInfo(packageName, 0).versionName
+        }.getOrNull() ?: "1.0"
+        val credit = findViewById<TextView>(R.id.credit)
+        credit.text = getString(R.string.credit, version)
+        credit.setOnClickListener {
+            runCatching {
+                startActivity(
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/QuaternionDev"))
+                )
+            }
+        }
     }
 
     private fun maybeStartScreenOff() {

@@ -202,5 +202,20 @@
             android:textColor="@color/on_bg_dim"
             android:textSize="13sp" />
 
+        <TextView
+            android:id="@+id/credit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/credit"
+            android:textColor="@color/on_bg_dim"
+            android:textSize="12sp"
+            android:alpha="0.7" />
+
     </LinearLayout>
 </ScrollView>

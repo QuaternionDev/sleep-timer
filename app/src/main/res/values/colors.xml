@@ -8,5 +8,6 @@
     <color name="on_bg_dim">#a5adce</color>
     <color name="accent">#8caaee</color>
     <color name="accent_on">#232634</color>
+    <color name="widget_stroke">#338caaee</color>
     <color name="widget_bg">#e6232634</color>
 </resources>

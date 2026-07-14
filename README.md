@@ -81,3 +81,8 @@ sideloading. For a release build you'd add your own keystore and run
   `TimerReceiver`/a small service).
 - A Quick Settings tile (`TileService`) for a one-swipe start.
 - Turn off Bluetooth/Wi-Fi on expiry.
+
+## Credits
+
+Sleep Timer v1.0 — built by **QuaternionDev** (https://github.com/QuaternionDev).
+Tap the credit line at the bottom of the app to open the GitHub org.

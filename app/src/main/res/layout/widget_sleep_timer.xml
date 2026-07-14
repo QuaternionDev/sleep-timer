@@ -3,30 +3,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     android:background="@drawable/widget_bg"
-    android:padding="12dp">
+    android:paddingHorizontal="18dp"
+    android:paddingVertical="16dp">
 
-    <TextView
-        android:id="@+id/widget_title"
-        android:layout_width="match_parent"
+    <!-- Header: moon + title, centered -->
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/widget_title"
-        android:textColor="@color/accent"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/ic_stat_timer"
+            android:tint="@color/accent"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/widget_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/widget_title"
+            android:textColor="@color/accent"
+            android:textSize="14sp"
+            android:letterSpacing="0.02"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- IDLE STATE -->
     <LinearLayout
         android:id="@+id/widget_idle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
             android:text="@string/widget_tap"
             android:textColor="@color/on_bg_dim"
             android:textSize="12sp" />
@@ -42,7 +62,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="5dp"
+                android:paddingVertical="9dp"
                 android:background="@drawable/widget_preset_bg"
                 android:text="@string/preset_15"
                 android:textColor="@color/on_bg"
@@ -54,8 +75,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginHorizontal="5dp"
+                android:paddingVertical="9dp"
                 android:background="@drawable/widget_preset_bg"
                 android:text="@string/preset_30"
                 android:textColor="@color/on_bg"
@@ -67,7 +88,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="5dp"
+                android:paddingVertical="9dp"
                 android:background="@drawable/widget_preset_bg"
                 android:text="@string/preset_60"
                 android:textColor="@color/on_bg"
@@ -82,27 +104,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:visibility="gone">
 
         <Chronometer
             android:id="@+id/widget_chrono"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
             android:gravity="center"
             android:textColor="@color/accent"
-            android:textSize="34sp"
-            android:textStyle="bold" />
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:includeFontPadding="false" />
 
         <Button
             android:id="@+id/widget_cancel"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:minWidth="140dp"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="10dp"
             android:background="@drawable/widget_cancel_bg"
             android:text="@string/action_cancel"
             android:textColor="@color/on_bg"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
