@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sleep Timer</string>
+
+    <string name="channel_name">Sleep timer</string>
+    <string name="channel_desc">Shows the currently running sleep timer</string>
+    <string name="notif_title">Sleep timer running</string>
+    <string name="notif_text">Music will fade out and pause</string>
+    <string name="action_extend">+%d min</string>
+    <string name="action_cancel">Cancel</string>
+
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="minutes">minutes</string>
+    <string name="remaining">remaining</string>
+    <string name="status_idle">Pick a duration or a preset, then start</string>
+    <string name="status_running">Music will fade out and pause when the timer ends</string>
+    <string name="fade_label">Fade-out length: %d s</string>
+    <string name="duration_heading">Duration</string>
+    <string name="presets_heading">Presets</string>
+    <string name="exact_alarm_hint">Allow exact alarms so the timer fires on time</string>
+    <string name="screen_off_label">Screen-off mode</string>
+    <string name="screen_off_hint">Blanks the screen at minimum brightness while the timer runs. Tap to wake.</string>
+    <string name="screen_off_tap">Tap anywhere to show the screen</string>
+
+    <!-- Widget -->
+    <string name="widget_desc">Start a sleep timer from your home screen</string>
+    <string name="widget_title">Sleep Timer</string>
+    <string name="widget_tap">Tap a preset to start</string>
+    <string name="preset_15">15m</string>
+    <string name="preset_30">30m</string>
+    <string name="preset_60">60m</string>
+</resources>
