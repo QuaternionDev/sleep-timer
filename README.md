@@ -5,10 +5,6 @@ pauses whatever is playing — Spotify, YouTube, Jellyfin, podcasts, any player 
 with quick presets, notification controls, an optional screen-off mode, and a
 home-screen widget.
 
-- Package: `hu.quaternion.sleeptimer`
-- minSdk 26 (Android 8.0), targetSdk 34
-- Kotlin, no third-party SDKs beyond AndroidX and Material
-
 ## Features
 
 - Duration dial (1–180 min) and one-tap presets (15 / 30 / 45 / 60 / 90).
@@ -44,10 +40,6 @@ add your own keystore and run `assembleRelease`.
   and 12L, if exact-alarm access was revoked, the app prompts you to re-enable
   it and otherwise falls back to an inexact alarm.
 
-## Credits
-
-Sleep Timer v1.0, built by QuaternionDev (https://github.com/QuaternionDev).
-
 ## AI Notice
 
-The app was written with the help of Claude by Anthropic.
+The app was written with the help of Claude by Anthropic. This app is purely vibe-coded, cause I wanted an app for my own needs.
