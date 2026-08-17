@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         switchScreenOff.isChecked = Prefs.isScreenOff(this)
         switchScreenOff.setOnCheckedChangeListener { _, checked ->
             Prefs.setScreenOff(this, checked)
+            Widgets.updateAll(this)
         }
 
         setLockSwitchChecked(Prefs.isLockScreen(this) && ScreenLocker.isAdminActive(this))
@@ -98,6 +99,7 @@ class MainActivity : AppCompatActivity() {
                     ScreenLocker.releaseAdmin(this)
                 }
             }
+            Widgets.updateAll(this)
         }
 
         selectedMinutes = Prefs.getLastMinutes(this)
@@ -113,7 +115,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(sb: SeekBar?) {}
-            override fun onStopTrackingTouch(sb: SeekBar?) {}
+
+            // Only once the drag ends, so we don't repaint the widgets on every pixel.
+            override fun onStopTrackingTouch(sb: SeekBar?) = Widgets.updateAll(this@MainActivity)
         })
 
         // Fade dial: 0..20 seconds.
@@ -127,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(sb: SeekBar?) {}
-            override fun onStopTrackingTouch(sb: SeekBar?) {}
+            override fun onStopTrackingTouch(sb: SeekBar?) = Widgets.updateAll(this@MainActivity)
         })
 
         // One-tap presets start immediately, matching the reference app.

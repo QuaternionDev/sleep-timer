@@ -22,7 +22,17 @@ object TimerController {
     const val ACTION_CANCEL = "hu.quaternion.sleeptimer.CANCEL"
     const val ACTION_EXTEND = "hu.quaternion.sleeptimer.EXTEND"
     const val ACTION_START = "hu.quaternion.sleeptimer.START"
+    const val ACTION_ADJUST = "hu.quaternion.sleeptimer.ADJUST"
+    const val ACTION_ADJUST_FADE = "hu.quaternion.sleeptimer.ADJUST_FADE"
+    const val ACTION_TOGGLE_SCREEN_OFF = "hu.quaternion.sleeptimer.TOGGLE_SCREEN_OFF"
+    const val ACTION_TOGGLE_LOCK = "hu.quaternion.sleeptimer.TOGGLE_LOCK"
     const val EXTRA_MINUTES = "minutes"
+    const val EXTRA_DELTA = "delta"
+
+    /** Bounds shared with the main screen's dials. */
+    const val MIN_MINUTES = 1
+    const val MAX_MINUTES = 180
+    const val MAX_FADE_SECONDS = 20
 
     private const val CHANNEL_ID = "sleep_timer"
     private const val NOTIF_ID = 1
@@ -39,17 +49,52 @@ object TimerController {
         Prefs.setLastMinutes(ctx, safeMinutes)
         scheduleAlarm(ctx, endTime)
         showNotification(ctx, endTime)
-        SleepTimerWidget.updateAll(ctx)
+        Widgets.updateAll(ctx)
     }
 
-    /** Add [addMinutes] to a running timer (or the default extend amount). */
+    /** Add [addMinutes] to a running timer (or the default extend amount). May be negative. */
     fun extend(ctx: Context, addMinutes: Int = Prefs.getExtendMinutes(ctx)) {
         if (!Prefs.isRunning(ctx)) return
-        val endTime = Prefs.getEndTime(ctx) + addMinutes * 60_000L
+        // Never pull the end time into the past — leave at least a minute to react.
+        val endTime = (Prefs.getEndTime(ctx) + addMinutes * 60_000L)
+            .coerceAtLeast(System.currentTimeMillis() + 60_000L)
         Prefs.setEndTime(ctx, endTime)
         scheduleAlarm(ctx, endTime)
         showNotification(ctx, endTime)
-        SleepTimerWidget.updateAll(ctx)
+        Widgets.updateAll(ctx)
+    }
+
+    /**
+     * The widgets' − / + buttons: shift a running timer, or the duration that will be used
+     * next when idle.
+     */
+    fun adjust(ctx: Context, deltaMinutes: Int) {
+        if (Prefs.isRunning(ctx)) {
+            extend(ctx, deltaMinutes)
+        } else {
+            val minutes = (Prefs.getLastMinutes(ctx) + deltaMinutes)
+                .coerceIn(MIN_MINUTES, MAX_MINUTES)
+            Prefs.setLastMinutes(ctx, minutes)
+            Widgets.updateAll(ctx)
+        }
+    }
+
+    fun adjustFade(ctx: Context, deltaSeconds: Int) {
+        val seconds = (Prefs.getFadeSeconds(ctx) + deltaSeconds).coerceIn(0, MAX_FADE_SECONDS)
+        Prefs.setFadeSeconds(ctx, seconds)
+        Widgets.updateAll(ctx)
+    }
+
+    fun toggleScreenOff(ctx: Context) {
+        Prefs.setScreenOff(ctx, !Prefs.isScreenOff(ctx))
+        Widgets.updateAll(ctx)
+    }
+
+    /** Only meaningful once the device-admin grant exists; the widget opens the app otherwise. */
+    fun toggleLock(ctx: Context) {
+        val on = !Prefs.isLockScreen(ctx) && ScreenLocker.isAdminActive(ctx)
+        Prefs.setLockScreen(ctx, on)
+        Widgets.updateAll(ctx)
     }
 
     /** Cancel a running timer without touching the music. */
@@ -58,7 +103,7 @@ object TimerController {
         Prefs.setEndTime(ctx, 0L)
         NotificationManagerCompat.from(ctx).cancel(NOTIF_ID)
         DimActivity.dismiss(ctx)
-        SleepTimerWidget.updateAll(ctx)
+        Widgets.updateAll(ctx)
     }
 
     /** Called by TimerReceiver once the alarm fires and the music has been stopped. */
@@ -66,7 +111,7 @@ object TimerController {
         Prefs.setEndTime(ctx, 0L)
         NotificationManagerCompat.from(ctx).cancel(NOTIF_ID)
         DimActivity.dismiss(ctx)
-        SleepTimerWidget.updateAll(ctx)
+        Widgets.updateAll(ctx)
     }
 
     /** Re-arm the alarm after a reboot if a timer was still pending. */
@@ -78,7 +123,7 @@ object TimerController {
         } else {
             Prefs.setEndTime(ctx, 0L)
         }
-        SleepTimerWidget.updateAll(ctx)
+        Widgets.updateAll(ctx)
     }
 
     // ---- Alarm plumbing ------------------------------------------------------

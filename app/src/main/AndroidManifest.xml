@@ -65,16 +65,41 @@
             </intent-filter>
         </receiver>
 
-        <!-- Home-screen widget -->
+        <!-- Home-screen widgets: one line, standard, and the full control panel -->
+        <receiver
+            android:name=".SleepTimerWidgetCompact"
+            android:exported="true"
+            android:label="@string/widget_label_compact">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_compact" />
+        </receiver>
+
         <receiver
             android:name=".SleepTimerWidget"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/widget_label_standard">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".SleepTimerWidgetLarge"
+            android:exported="true"
+            android:label="@string/widget_label_large">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_large" />
         </receiver>
 
     </application>

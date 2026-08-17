@@ -1,135 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Standard widget (4x2): header with the two toggles, the selected duration or a live
+  countdown, then presets when idle / adjust + cancel while running.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:background="@drawable/widget_bg"
-    android:paddingHorizontal="18dp"
-    android:paddingVertical="16dp">
+    android:paddingHorizontal="14dp"
+    android:paddingVertical="12dp">
 
-    <!-- Header: moon + title, centered -->
+    <!-- Header -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:baselineAligned="false">
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:id="@+id/widget_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_marginEnd="6dp"
             android:src="@drawable/ic_stat_timer"
             android:tint="@color/accent"
-            android:contentDescription="@null" />
+            android:contentDescription="@string/widget_title"
+            tools:ignore="UseAppTint" />
 
         <TextView
             android:id="@+id/widget_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/widget_title"
             android:textColor="@color/accent"
-            android:textSize="14sp"
-            android:letterSpacing="0.02"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <!-- IDLE STATE -->
-    <LinearLayout
-        android:id="@+id/widget_idle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.02" />
 
         <TextView
+            android:id="@+id/widget_screen_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="12dp"
-            android:text="@string/widget_tap"
+            android:background="@drawable/widget_chip_off"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:text="@string/widget_screen_off"
             android:textColor="@color/on_bg_dim"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/widget_lock"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
-
-            <Button
-                android:id="@+id/widget_preset_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="5dp"
-                android:paddingVertical="9dp"
-                android:background="@drawable/widget_preset_bg"
-                android:text="@string/preset_15"
-                android:textColor="@color/on_bg"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/widget_preset_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="5dp"
-                android:paddingVertical="9dp"
-                android:background="@drawable/widget_preset_bg"
-                android:text="@string/preset_30"
-                android:textColor="@color/on_bg"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/widget_preset_3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:paddingVertical="9dp"
-                android:background="@drawable/widget_preset_bg"
-                android:text="@string/preset_60"
-                android:textColor="@color/on_bg"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:layout_marginStart="5dp"
+            android:background="@drawable/widget_chip_off"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:text="@string/widget_lock"
+            android:textColor="@color/on_bg_dim"
+            android:textSize="11sp" />
     </LinearLayout>
 
-    <!-- RUNNING STATE -->
+    <!-- Selected duration (idle) or countdown (running) -->
     <LinearLayout
-        android:id="@+id/widget_running"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:visibility="gone">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:baselineAligned="false">
+
+        <TextView
+            android:id="@+id/widget_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:textColor="@color/accent"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:includeFontPadding="false" />
 
         <Chronometer
             android:id="@+id/widget_chrono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="12dp"
-            android:gravity="center"
             android:textColor="@color/accent"
-            android:textSize="40sp"
+            android:textSize="34sp"
             android:textStyle="bold"
-            android:includeFontPadding="false" />
+            android:includeFontPadding="false"
+            android:visibility="gone" />
 
-        <Button
-            android:id="@+id/widget_cancel"
+        <!-- Caption last, so it reads "30 minutes" idle and "24:13 remaining" running -->
+        <TextView
+            android:id="@+id/widget_sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="140dp"
-            android:paddingHorizontal="32dp"
-            android:paddingVertical="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="3dp"
+            android:text="@string/minutes"
+            android:textColor="@color/on_bg_dim"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Presets (idle) -->
+    <LinearLayout
+        android:id="@+id/widget_idle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <TextView
+            android:id="@+id/widget_preset_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/widget_preset_bg"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="@string/preset_15"
+            android:textColor="@color/on_bg"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_preset_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="3dp"
+            android:background="@drawable/widget_preset_bg"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="@string/preset_30"
+            android:textColor="@color/on_bg"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_preset_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="3dp"
+            android:background="@drawable/widget_preset_bg"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="@string/preset_45"
+            android:textColor="@color/on_bg"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_preset_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="3dp"
+            android:background="@drawable/widget_preset_bg"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="@string/preset_60"
+            android:textColor="@color/on_bg"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_preset_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/widget_preset_bg"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="@string/preset_90"
+            android:textColor="@color/on_bg"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Adjust / cancel (running) -->
+    <LinearLayout
+        android:id="@+id/widget_running"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/widget_minus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/widget_preset_bg"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="@string/widget_minus"
+            android:textColor="@color/on_bg"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_plus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/widget_preset_bg"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="@string/widget_plus"
+            android:textColor="@color/on_bg"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginStart="4dp"
             android:background="@drawable/widget_cancel_bg"
+            android:gravity="center"
+            android:paddingVertical="8dp"
             android:text="@string/action_cancel"
             android:textColor="@color/on_bg"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
     </LinearLayout>
 

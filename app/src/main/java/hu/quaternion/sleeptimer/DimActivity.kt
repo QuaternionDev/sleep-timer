@@ -41,6 +41,7 @@ class DimActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startTimerIfRequested(intent)
 
         // Show over the lock screen and keep it up until dismissed.
         if (Build.VERSION.SDK_INT >= 27) {
@@ -66,6 +67,21 @@ class DimActivity : AppCompatActivity() {
         findViewById<android.view.View>(R.id.dimRoot).setOnClickListener { finish() }
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        startTimerIfRequested(intent)
+    }
+
+    /**
+     * A widget tap can hand us a duration: with screen-off mode on, the widget starts the
+     * timer through this activity, because the receiver alone may not launch one.
+     */
+    private fun startTimerIfRequested(intent: Intent?) {
+        val minutes = intent?.getIntExtra(EXTRA_START_MINUTES, 0) ?: 0
+        if (minutes > 0) TimerController.start(this, minutes)
+    }
+
     override fun onStart() {
         super.onStart()
         val filter = IntentFilter(ACTION_FINISH_DIM)
@@ -87,6 +103,13 @@ class DimActivity : AppCompatActivity() {
 
     companion object {
         const val ACTION_FINISH_DIM = "hu.quaternion.sleeptimer.FINISH_DIM"
+        private const val EXTRA_START_MINUTES = "start_minutes"
+
+        /** Blank the screen and start a [minutes] timer in one tap, straight from a widget. */
+        fun startIntent(ctx: Context, minutes: Int): Intent =
+            Intent(ctx, DimActivity::class.java)
+                .putExtra(EXTRA_START_MINUTES, minutes)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
         /** Called when the timer ends or is cancelled to drop the dim screen. */
         fun dismiss(ctx: Context) {

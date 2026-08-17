@@ -18,8 +18,13 @@ home-screen widget.
   device admin, so the switch asks for that permission once; the app requests the
   force-lock policy and nothing else, and turning the switch off revokes it.
 - Ongoing notification with a live countdown, +min and Cancel actions.
-- Home-screen widget: presets when idle, a live countdown and Cancel while
-  running.
+- Three home-screen widgets, all of them live — the app itself is only needed for
+  the one-time screen-lock permission:
+  - **One line** (4x1): five presets when idle; countdown, +5 and Stop while running.
+  - **Standard** (4x2): the screen-off and lock toggles, the selected duration or a
+    live countdown, then presets when idle / −5, +5 and Cancel while running.
+  - **Full** (4x4): all of the above plus fine adjust around the value, the
+    fade-out length, and a Start / Cancel button.
 - Survives reboots and fires on time in Doze.
 
 ## Building

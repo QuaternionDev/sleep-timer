@@ -30,11 +30,33 @@
     <string name="lock_admin_denied">Screen lock stays off — the permission was not granted</string>
     <string name="credit">Made by QuaternionDev · v%1$s</string>
 
-    <!-- Widget -->
-    <string name="widget_desc">Start a sleep timer from your home screen</string>
+    <!-- Widgets -->
     <string name="widget_title">Sleep Timer</string>
-    <string name="widget_tap">Tap a preset to start</string>
+
+    <string name="widget_label_compact">Sleep Timer · one line</string>
+    <string name="widget_desc_compact">A single row: presets when idle, countdown and controls while running</string>
+    <string name="widget_label_standard">Sleep Timer</string>
+    <string name="widget_desc">Countdown, presets and the screen-off and lock toggles</string>
+    <string name="widget_label_large">Sleep Timer · full</string>
+    <string name="widget_desc_large">Every control: presets, fine adjust, fade length, screen-off and lock</string>
+
     <string name="preset_15">15m</string>
     <string name="preset_30">30m</string>
+    <string name="preset_45">45m</string>
     <string name="preset_60">60m</string>
+    <string name="preset_90">90m</string>
+
+    <string name="widget_minus">−5</string>
+    <string name="widget_plus">+5</string>
+    <string name="widget_fade_minus">−</string>
+    <string name="widget_fade_plus">+</string>
+    <string name="widget_fade">Fade-out</string>
+    <string name="widget_fade_value">%d s</string>
+    <string name="widget_fade_default">5 s</string>
+    <string name="widget_screen_off">Screen off</string>
+    <string name="widget_lock">Lock</string>
+    <string name="widget_toggle_on">%1$s: on</string>
+    <string name="widget_toggle_off">%1$s: off</string>
+    <string name="widget_less">5 minutes less</string>
+    <string name="widget_more">5 minutes more</string>
 </resources>

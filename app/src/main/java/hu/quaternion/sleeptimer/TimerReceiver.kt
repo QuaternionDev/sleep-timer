@@ -14,6 +14,8 @@ import kotlin.concurrent.thread
  *  - ACTION_CANCEL  : stop the timer, leave music alone
  *  - ACTION_EXTEND  : add minutes to a running timer
  *  - ACTION_START   : start a preset timer (used by the widget buttons)
+ *  - ACTION_ADJUST  : widget − / +, shifts the running timer or the pending duration
+ *  - ACTION_ADJUST_FADE / ACTION_TOGGLE_* : the settings the widgets expose
  */
 class TimerReceiver : BroadcastReceiver() {
 
@@ -23,9 +25,22 @@ class TimerReceiver : BroadcastReceiver() {
             TimerController.ACTION_CANCEL -> TimerController.cancel(context)
             TimerController.ACTION_EXTEND -> TimerController.extend(context)
             TimerController.ACTION_START -> {
-                val minutes = intent.getIntExtra(TimerController.EXTRA_MINUTES, 30)
+                val minutes = intent.getIntExtra(
+                    TimerController.EXTRA_MINUTES, Prefs.getLastMinutes(context)
+                )
                 TimerController.start(context, minutes)
             }
+
+            TimerController.ACTION_ADJUST ->
+                TimerController.adjust(context, intent.getIntExtra(TimerController.EXTRA_DELTA, 0))
+
+            TimerController.ACTION_ADJUST_FADE ->
+                TimerController.adjustFade(
+                    context, intent.getIntExtra(TimerController.EXTRA_DELTA, 0)
+                )
+
+            TimerController.ACTION_TOGGLE_SCREEN_OFF -> TimerController.toggleScreenOff(context)
+            TimerController.ACTION_TOGGLE_LOCK -> TimerController.toggleLock(context)
         }
     }
 
