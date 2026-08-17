@@ -31,9 +31,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fadeLabel: TextView
     private lateinit var startStop: MaterialButton
     private lateinit var switchScreenOff: MaterialSwitch
+    private lateinit var switchLock: MaterialSwitch
     private lateinit var status: TextView
 
     private var selectedMinutes = 30
+
+    /** Guards the lock switch listener while we set its state in code. */
+    private var suppressLockSwitch = false
 
     private val ticker = Handler(Looper.getMainLooper())
     private val tick = object : Runnable {
@@ -48,6 +52,17 @@ class MainActivity : AppCompatActivity() {
     private val notifPermLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { /* no-op */ }
 
+    /** Device-admin activation for the "lock the screen when the timer ends" option. */
+    private val lockAdminLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val granted = ScreenLocker.isAdminActive(this)
+            Prefs.setLockScreen(this, granted)
+            setLockSwitchChecked(granted)
+            if (!granted) {
+                Toast.makeText(this, R.string.lock_admin_denied, Toast.LENGTH_LONG).show()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -59,11 +74,30 @@ class MainActivity : AppCompatActivity() {
         fadeLabel = findViewById(R.id.fadeLabel)
         startStop = findViewById(R.id.startStop)
         switchScreenOff = findViewById(R.id.switchScreenOff)
+        switchLock = findViewById(R.id.switchLock)
         status = findViewById(R.id.status)
 
         switchScreenOff.isChecked = Prefs.isScreenOff(this)
         switchScreenOff.setOnCheckedChangeListener { _, checked ->
             Prefs.setScreenOff(this, checked)
+        }
+
+        setLockSwitchChecked(Prefs.isLockScreen(this) && ScreenLocker.isAdminActive(this))
+        switchLock.setOnCheckedChangeListener { _, checked ->
+            if (suppressLockSwitch) return@setOnCheckedChangeListener
+            when {
+                // Locking the device needs a device-admin grant; ask for it the first time.
+                checked && !ScreenLocker.isAdminActive(this) ->
+                    lockAdminLauncher.launch(ScreenLocker.activationIntent(this))
+
+                checked -> Prefs.setLockScreen(this, true)
+
+                // Off means off: hand the privilege back instead of just remembering a flag.
+                else -> {
+                    Prefs.setLockScreen(this, false)
+                    ScreenLocker.releaseAdmin(this)
+                }
+            }
         }
 
         selectedMinutes = Prefs.getLastMinutes(this)
@@ -133,6 +167,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setLockSwitchChecked(checked: Boolean) {
+        suppressLockSwitch = true
+        switchLock.isChecked = checked
+        suppressLockSwitch = false
+    }
+
+    /** The admin grant can be revoked from system settings while we are away. */
+    private fun syncLockSwitch() {
+        val on = Prefs.isLockScreen(this) && ScreenLocker.isAdminActive(this)
+        if (Prefs.isLockScreen(this) != on) Prefs.setLockScreen(this, on)
+        setLockSwitchChecked(on)
+    }
+
     private fun maybeStartScreenOff() {
         if (Prefs.isScreenOff(this)) {
             startActivity(Intent(this, DimActivity::class.java))
@@ -150,6 +197,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        syncLockSwitch()
         syncUi()
     }
 

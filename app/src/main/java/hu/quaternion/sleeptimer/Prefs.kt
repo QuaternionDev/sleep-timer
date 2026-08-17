@@ -11,6 +11,7 @@ object Prefs {
     private const val KEY_FADE_SEC = "fade_seconds"    // fade-out length in seconds
     private const val KEY_EXTEND_MIN = "extend_min"    // minutes added by the "+" action
     private const val KEY_SCREEN_OFF = "screen_off"    // dim the screen to black while running
+    private const val KEY_LOCK_SCREEN = "lock_screen"  // lock the device when the timer ends
 
     private fun sp(ctx: Context) =
         ctx.getSharedPreferences(FILE, Context.MODE_PRIVATE)
@@ -41,4 +42,8 @@ object Prefs {
     fun isScreenOff(ctx: Context): Boolean = sp(ctx).getBoolean(KEY_SCREEN_OFF, false)
     fun setScreenOff(ctx: Context, on: Boolean) =
         sp(ctx).edit().putBoolean(KEY_SCREEN_OFF, on).apply()
+
+    fun isLockScreen(ctx: Context): Boolean = sp(ctx).getBoolean(KEY_LOCK_SCREEN, false)
+    fun setLockScreen(ctx: Context, on: Boolean) =
+        sp(ctx).edit().putBoolean(KEY_LOCK_SCREEN, on).apply()
 }

@@ -180,6 +180,25 @@
             android:textColor="@color/on_bg_dim"
             android:textSize="12sp" />
 
+        <!-- Lock the screen when the timer ends -->
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchLock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="48dp"
+            android:text="@string/lock_screen_label"
+            android:textColor="@color/on_bg"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/lock_screen_hint"
+            android:textColor="@color/on_bg_dim"
+            android:textSize="12sp" />
+
         <!-- Start / Stop -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/startStop"

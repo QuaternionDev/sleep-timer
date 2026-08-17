@@ -50,6 +50,21 @@
             </intent-filter>
         </receiver>
 
+        <!-- Device admin, force-lock only: lets the timer lock the screen when it ends -->
+        <receiver
+            android:name=".LockAdminReceiver"
+            android:exported="true"
+            android:description="@string/lock_admin_description"
+            android:label="@string/lock_admin_label"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
         <!-- Home-screen widget -->
         <receiver
             android:name=".SleepTimerWidget"

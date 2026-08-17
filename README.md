@@ -14,6 +14,9 @@ home-screen widget.
 - Screen-off mode: a full-black screen at minimum brightness covers the display
   while the timer runs, so the light from a video goes away while audio keeps
   playing. Tap anywhere, or let the timer end, to bring the screen back.
+- Optional screen lock when the timer ends. Android only allows this for an active
+  device admin, so the switch asks for that permission once; the app requests the
+  force-lock policy and nothing else, and turning the switch off revokes it.
 - Ongoing notification with a live countdown, +min and Cancel actions.
 - Home-screen widget: presets when idle, a live countdown and Cancel while
   running.

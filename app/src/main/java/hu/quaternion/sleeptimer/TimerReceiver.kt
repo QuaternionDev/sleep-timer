@@ -9,7 +9,8 @@ import kotlin.concurrent.thread
 
 /**
  * Receives:
- *  - ACTION_EXPIRED : the alarm fired -> fade out & pause media (on a wakelocked thread)
+ *  - ACTION_EXPIRED : the alarm fired -> fade out, pause media and optionally lock the screen
+ *                     (on a wakelocked thread)
  *  - ACTION_CANCEL  : stop the timer, leave music alone
  *  - ACTION_EXTEND  : add minutes to a running timer
  *  - ACTION_START   : start a preset timer (used by the widget buttons)
@@ -45,6 +46,8 @@ class TimerReceiver : BroadcastReceiver() {
                 MediaStopper.fadeAndStop(appContext, fadeSeconds)
             } finally {
                 TimerController.onExpired(appContext)
+                // After the dim overlay is dismissed, so the keyguard is what stays on screen.
+                ScreenLocker.lockIfEnabled(appContext)
                 if (wakeLock?.isHeld == true) wakeLock.release()
                 pendingResult.finish()
             }
