@@ -1,9 +1,8 @@
 # Sleep Timer
 
 A small, ad-free Android sleep timer. It fades your audio or video out and then
-pauses whatever is playing — Spotify, YouTube, Jellyfin, podcasts, any player —
-with quick presets, notification controls, an optional screen-off mode, and a
-home-screen widget.
+pauses whatever is playing. It has quick presets, notification controls, 
+an optional screen-off mode, and a home-screen widget.
 
 ## Features
 
@@ -17,7 +16,7 @@ home-screen widget.
 - Optional screen lock when the timer ends. Android only allows this for an active
   device admin, so the switch asks for that permission once; the app requests the
   force-lock policy and nothing else, and turning the switch off revokes it.
-- Ongoing notification with a live countdown, +min and Cancel actions.
+- Ongoing notification with a live countdown, +min and Cancel buttons.
 - Three home-screen widgets, all of them live — the app itself is only needed for
   the one-time screen-lock permission:
   - **One line** (4x1): five presets when idle; countdown, +5 and Stop while running.
@@ -51,3 +50,7 @@ add your own keystore and run `assembleRelease`.
 ## AI Notice
 
 The app was written with the help of Claude by Anthropic. This app is purely vibe-coded, cause I wanted an app for my own needs.
+
+## How to contribute?
+
+If u have a new feature in mind, feel free to fork the repo and add a feature or fix a bug u found, then open a pull request for me to review it.
