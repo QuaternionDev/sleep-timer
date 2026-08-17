@@ -33,12 +33,12 @@
     <!-- Widgets -->
     <string name="widget_title">Sleep Timer</string>
 
-    <string name="widget_label_compact">Sleep Timer · one line</string>
-    <string name="widget_desc_compact">A single row: presets when idle, countdown and controls while running</string>
+    <string name="widget_label_compact">Sleep Timer</string>
+    <string name="widget_desc_compact">Compact: presets when idle, countdown and controls while running</string>
     <string name="widget_label_standard">Sleep Timer</string>
     <string name="widget_desc">Countdown, presets and the screen-off and lock toggles</string>
-    <string name="widget_label_large">Sleep Timer · full</string>
-    <string name="widget_desc_large">Every control: presets, fine adjust, fade length, screen-off and lock</string>
+    <string name="widget_label_large">Sleep Timer</string>
+    <string name="widget_desc_large">Full: presets, fine adjust, fade length, screen-off and lock</string>
 
     <string name="preset_15">15m</string>
     <string name="preset_30">30m</string>
