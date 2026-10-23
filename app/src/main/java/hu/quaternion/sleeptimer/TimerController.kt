@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
@@ -40,6 +41,12 @@ object TimerController {
     private const val REQ_CANCEL = 101
     private const val REQ_EXTEND = 102
     private const val REQ_CONTENT = 103
+
+    /**
+     * Notification.EXTRA_REQUEST_PROMOTED_ONGOING (API 36). Asks for a Live Update, which One UI 8+
+     * shows in the Now Bar. Set as a raw extra so compileSdk can stay at 34; older systems ignore it.
+     */
+    private const val EXTRA_REQUEST_PROMOTED_ONGOING = "android.requestPromotedOngoing"
 
     /** Start (or restart) a timer for [minutes] minutes from now. */
     fun start(ctx: Context, minutes: Int) {
@@ -202,6 +209,9 @@ object TimerController {
             .setUsesChronometer(true)
             .setChronometerCountDown(true)
             .setColor(ctx.getColor(R.color.accent))
+            // Live Update / Now Bar: needs ongoing, a title, no custom views and not colorized,
+            // all already true here. The chronometer drives the countdown in the status chip.
+            .addExtras(Bundle().apply { putBoolean(EXTRA_REQUEST_PROMOTED_ONGOING, true) })
             .addAction(
                 0,
                 ctx.getString(R.string.action_extend, extendMin),

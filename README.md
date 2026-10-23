@@ -17,6 +17,8 @@ an optional screen-off mode, and a home-screen widget.
   device admin, so the switch asks for that permission once; the app requests the
   force-lock policy and nothing else, and turning the switch off revokes it.
 - Ongoing notification with a live countdown, +min and Cancel buttons.
+- Live Update support on Android 16+: the countdown shows as a status bar chip,
+  and in the Now Bar on Samsung phones running One UI 8 or newer.
 - Three home-screen widgets, all of them live — the app itself is only needed for
   the one-time screen-lock permission:
   - **One line** (4x1): five presets when idle; countdown, +5 and Stop while running.
@@ -35,8 +37,7 @@ Requires JDK 17 and the Android SDK.
 ```
 
 The APK is written to `app/build/outputs/apk/debug/app-debug.apk` and is signed
-with the debug key, which is fine for personal sideloading. For a release build,
-add your own keystore and run `assembleRelease`.
+with the debug key, which is fine for personal sideloading.
 
 ## Reliability notes
 

@@ -5,7 +5,7 @@
     <string name="channel_name">Sleep timer</string>
     <string name="channel_desc">Shows the currently running sleep timer</string>
     <string name="notif_title">Sleep timer running</string>
-    <string name="notif_text">Music will fade out and pause</string>
+    <string name="notif_text">Media will be paused</string>
     <string name="action_extend">+%d min</string>
     <string name="action_cancel">Cancel</string>
 
@@ -14,7 +14,7 @@
     <string name="minutes">minutes</string>
     <string name="remaining">remaining</string>
     <string name="status_idle">Pick a duration or a preset, then start</string>
-    <string name="status_running">Music will fade out and pause when the timer ends</string>
+    <string name="status_running">Media will fade out and pause when the timer ends</string>
     <string name="fade_label">Fade-out length: %d s</string>
     <string name="duration_heading">Duration</string>
     <string name="presets_heading">Presets</string>
@@ -23,11 +23,11 @@
     <string name="screen_off_hint">Blanks the screen at minimum brightness while the timer runs. Tap to wake.</string>
     <string name="screen_off_tap">Tap anywhere to show the screen</string>
     <string name="lock_screen_label">Lock the screen when the timer ends</string>
-    <string name="lock_screen_hint">Needs a one-time permission so the app may lock the device. It is used for nothing else.</string>
+    <string name="lock_screen_hint">Needs a one-time permission so the app may lock the device. You can revoke it at any time.</string>
     <string name="lock_admin_label">Lock screen when the timer ends</string>
     <string name="lock_admin_description">Allows Sleep Timer to lock the screen once the timer has run out.</string>
     <string name="lock_admin_explanation">Sleep Timer only uses this to lock the screen when the timer ends. Turn it off any time to revoke it.</string>
-    <string name="lock_admin_denied">Screen lock stays off — the permission was not granted</string>
+    <string name="lock_admin_denied">Screen lock stays off — permission was not granted</string>
     <string name="credit">Made by QuaternionDev · v%1$s</string>
 
     <!-- Widgets -->
